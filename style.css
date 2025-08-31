@@ -1,40 +1,113 @@
-/* ... wcześniejszy reset i styl ... */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #111;
+  transition: background 0.3s, color 0.3s;
+}
 
 body.dark {
   background-color: #111;
-  color: #ddd;
+  color: #eee;
 }
 
-.album.open {
-  background-color: #333;
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+/* Tryb ciemny toggle */
+.dark-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: #ddd;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+body.dark .dark-toggle {
+  background: #333;
+  color: #fff;
+}
+
+/* Albumy */
+.album {
+  border: 2px solid #000;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+body.dark .album {
+  border-color: #999;
+  background-color: #222;
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.album-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.year {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+body.dark .year {
+  color: #aaa;
 }
 
 .spotify-icon {
   width: 24px;
   height: 24px;
   margin: 0 10px;
-  vertical-align: middle;
+  filter: grayscale(0%);
 }
 
-/* Dark mode toggle button */
-.dark-toggle {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 6px 12px;
-  border: 1px solid #555;
-  background: transparent;
-  color: #555;
-  cursor: pointer;
-  border-radius: 4px;
+.arrow {
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
 }
 
-body.dark .dark-toggle {
-  color: #ddd;
-  border-color: #ddd;
+.description {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 20px;
+  transition: height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
 }
 
-/* Przewijanie albumu do widoku */
-.album.open {
-  scroll-margin-top: 80px;
+.album.open .description {
+  opacity: 1;
+  padding-bottom: 20px;
+}
+
+.album.open .arrow {
+  transform: rotate(180deg);
 }
