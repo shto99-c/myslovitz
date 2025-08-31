@@ -3,10 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
-  // ——— BLOKADA SCROLLA NA CAŁEJ STRONIE NA STAŁE ———
-  body.style.overflow = "hidden";
-  body.style.height = "100vh";
-
   // ——— TRYB CIEMNY Z LOCALSTORAGE ———
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
