@@ -1,14 +1,16 @@
+/* RESET + SYSTEM */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+html, body {
   font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
   background-color: #ffffff;
   color: #111111;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body.dark {
@@ -16,23 +18,31 @@ body.dark {
   color: #eeeeee;
 }
 
+/* CONTAINER */
 .container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 60px auto;
   padding: 20px;
 }
 
+/* TOGGLE BUTTON */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 10;
-  padding: 8px 14px;
+  padding: 10px 16px;
   background: #ddd;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+
+.dark-toggle:hover {
+  transform: scale(1.05);
 }
 
 body.dark .dark-toggle {
@@ -40,26 +50,35 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
+/* ALBUM */
 .album {
   border: 2px solid #000;
-  border-radius: 12px;
-  margin-bottom: 24px;
+  border-radius: 16px;
+  margin-bottom: 28px;
   background-color: #fff;
   overflow: hidden;
-  transition: background-color 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
+}
+
+.album.fade-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 body.dark .album {
-  border-color: #aaa;
-  background-color: #222;
+  background-color: #1a1a1a;
+  border-color: #888;
 }
 
+/* SUMMARY BAR */
 .summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 20px;
+  padding: 20px 24px;
+  gap: 12px;
   cursor: pointer;
 }
 
@@ -69,7 +88,7 @@ body.dark .album {
 
 .title {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .year {
@@ -78,44 +97,47 @@ body.dark .album {
 }
 
 body.dark .year {
-  color: #bbb;
+  color: #aaa;
 }
 
+/* SPOTIFY ICON */
 .spotify-icon {
-  width: 24px;
-  height: 24px;
-  filter: grayscale(0%);
-  transition: transform 0.2s;
+  width: 26px;
+  height: 26px;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .spotify-icon:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) rotate(10deg);
+  filter: drop-shadow(0 0 6px #1DB954);
 }
 
+/* ARROW */
 .arrow {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
+/* DESCRIPTION */
 .description {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 20px;
-  transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+  padding: 0 24px;
+  transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
 }
 
 .description p {
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.album.open .description {
-  max-height: 400px;
+.album.expanded .description {
   opacity: 1;
-  padding-bottom: 20px;
+  padding-bottom: 24px;
+  max-height: 1000px;
 }
 
-.album.open .arrow {
+.album.expanded .arrow {
   transform: rotate(180deg);
 }
