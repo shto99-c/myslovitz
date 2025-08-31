@@ -162,4 +162,70 @@ body.dark .year {
   .spotify-icon {
     align-self: flex-end;
   }
+/* —— SIDEBAR —— */
+#sidebarToggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: #ddd;
+  color: #111;
+  border-radius: 0 6px 6px 0;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 20;
+  transition: background-color 0.3s, transform 0.3s;
 }
+
+body.dark #sidebarToggle {
+  background-color: #333;
+  color: #fff;
+}
+
+#sidebarToggle:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Sidebar container */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -80px;
+  width: 80px;
+  height: 100%;
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+  z-index: 15;
+}
+
+body.dark #sidebar {
+  background-color: #222;
+}
+
+/* Sidebar icon */
+.sidebar-icon {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 6px #00cc99);
+}
+
+/* Sidebar visible */
+body.sidebar-open #sidebar {
+  left: 0;
+}
+
+/* Flip strzałki gdy otwarte */
+body.sidebar-open #sidebarToggle {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+
