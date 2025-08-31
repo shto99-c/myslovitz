@@ -7,18 +7,19 @@
 
 html, body {
   height: 100%;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Orbitron', 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
-  background-color: #ffffff;
-  color: #111111;
-  transition: background 0.3s ease, color 0.3s ease;
+  background-color: #0f0f1e;
+  color: #e0e0ff;
+  transition: background 0.4s ease, color 0.4s ease;
   width: 100%;
   min-height: 100vh;
 }
 
+/* Tryb ciemny - odwrócony, jasny tryb */
 body.dark {
-  background-color: #111111;
-  color: #eeeeee;
+  background: linear-gradient(135deg, #070720, #1a1a3d);
+  color: #a0cfff;
 }
 
 /* Pojemnik na całą zawartość */
@@ -26,7 +27,9 @@ body.dark {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
-  background: transparent;
+  background: rgba(30,30,60,0.5);
+  border-radius: 16px;
+  box-shadow: 0 0 25px #4a90e2aa;
 }
 
 /* Przycisk trybu ciemnego */
@@ -35,44 +38,47 @@ body.dark {
   top: 20px;
   right: 20px;
   z-index: 10;
-  padding: 8px 14px;
-  background: #ddd;
-  border: none;
-  border-radius: 8px;
+  padding: 10px 16px;
+  background: #151540;
+  border: 2px solid #3f6ef0;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s, color 0.3s;
+  font-size: 16px;
+  font-weight: 700;
+  color: #a0cfff;
+  text-shadow: 0 0 6px #3f6ef0;
+  transition: background 0.3s, color 0.3s, box-shadow 0.4s;
 }
-
-body.dark .dark-toggle {
-  background: #333;
-  color: #fff;
+.dark-toggle:hover {
+  background: #3f6ef0;
+  color: #0f0f1e;
+  box-shadow: 0 0 12px #3f6ef0;
 }
 
 /* Kafelek albumu */
 .album {
-  border: 2px solid #000;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  background-color: #fff;
+  border: 2px solid #3f6ef0;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  background-color: rgba(15, 15, 30, 0.9);
   overflow: hidden;
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   opacity: 0;
   transform: translateY(40px);
-  color: #111111;
+  color: #a0cfff;
+  box-shadow: 0 0 12px #3f6ef0aa;
+  cursor: default;
 }
-
-body.dark .album {
-  border-color: #aaa;
-  background-color: #1a1a1a;
-  color: #eeeeee;
+.album:hover {
+  box-shadow: 0 0 24px #65a7ff;
+  border-color: #65a7ff;
 }
 
 /* Widoczność po pojawieniu się */
 .album.fade-in {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 /* Górna część albumu */
@@ -80,72 +86,58 @@ body.dark .album {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 20px;
+  gap: 12px;
+  padding: 20px 24px;
   cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  border-radius: 16px;
+}
+.summary:hover {
+  background: rgba(65, 105, 255, 0.15);
+  box-shadow: 0 0 10px #65a7ffaa;
 }
 
+/* Tekst */
 .text-block {
   flex: 1;
 }
 
 /* Tytuł i rok */
 .title {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-shadow: 0 0 8px #7db9ff;
+  letter-spacing: 0.03em;
 }
-
 .year {
-  font-size: 0.85rem;
-  color: #777;
+  font-size: 1rem;
+  color: #88b1f9;
   margin-top: 4px;
-}
-
-body.dark .year {
-  color: #bbb;
+  font-weight: 600;
+  text-shadow: 0 0 5px #4f7fdf;
 }
 
 /* Ikonka Spotify */
 .spotify-icon {
-  width: 24px;
-  height: 24px;
-  filter: grayscale(0%);
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 3px #1DB954);
   transition: transform 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
-
 .spotify-icon:hover {
-  transform: scale(1.25);
-  filter: drop-shadow(0 0 6px #1DB954);
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 10px #1DB954);
 }
 
-/* Custom strzałka Uiverse */
-.custom-arrow {
-  position: relative;
-  width: 22px;
-  height: 22px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: transform 0.4s ease;
-  color: inherit;
-}
-
-.custom-arrow::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  border-bottom: 2px solid currentColor;
-  border-right: 2px solid currentColor;
-  transform: translate(-50%, -50%) rotate(45deg);
-  transition: transform 0.3s ease;
-}
-
-.custom-arrow.rotated::before {
-  transform: translate(-50%, -50%) rotate(-135deg);
+/* Strzałka */
+.arrow {
+  font-size: 1.5rem;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #65a7ff;
+  user-select: none;
+  filter: drop-shadow(0 0 4px #65a7ffaa);
 }
 
 /* Opis albumu */
@@ -153,20 +145,29 @@ body.dark .year {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 20px;
-  transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+  padding: 0 24px;
+  transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.5s ease;
   background-color: transparent;
-  color: inherit;
+  color: #b0c9ff;
+  font-weight: 500;
+  line-height: 1.6;
+  user-select: text;
 }
 
 .description p {
-  line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
+/* Po rozwinięciu */
 .album.expanded .description {
   opacity: 1;
   padding-bottom: 20px;
+  max-height: 1000px; /* duża wartość by zmieścić tekst */
+}
+
+.album.expanded .arrow {
+  transform: rotate(180deg);
+  filter: drop-shadow(0 0 8px #65a7ff);
 }
 
 /* Responsywność */
