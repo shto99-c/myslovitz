@@ -1,139 +1,165 @@
-/* RESET & BASE */
+/* Import czcionki Nunito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+
+/* Reset i podstawy */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Exo', sans-serif;
-  background-color: #0f0f0f;
-  color: #f0f0f0;
-  transition: background 0.3s ease, color 0.3s ease;
-  line-height: 1.6;
-}
-
-body.dark {
-  background-color: #000000;
+html, body {
+  height: 100%;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #111111;
   color: #eeeeee;
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 100%;
+  min-height: 100vh;
 }
 
-/* CONTAINER */
+/* Pojemnik na całą zawartość */
 .container {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
+  background: transparent;
 }
 
-/* DARK MODE TOGGLE */
+/* Przycisk trybu ciemnego */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 10;
   padding: 8px 14px;
-  background: #1c1c1c;
+  background: #222;
   border: none;
   border-radius: 8px;
-  color: #f5f5f5;
   cursor: pointer;
   font-size: 14px;
-  box-shadow: 0 0 12px rgba(255, 255, 150, 0.2);
+  color: #ffea75; /* delikatny żółty */
+  box-shadow: 0 0 6px 2px rgba(255, 234, 117, 0.3);
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
-/* ALBUM CARD */
+.dark-toggle:hover {
+  box-shadow: 0 0 10px 4px rgba(255, 234, 117, 0.5);
+}
+
+/* Kafelek albumu */
 .album {
-  background: #1a1a1a;
-  border-radius: 16px;
-  margin-bottom: 30px;
-  padding: 16px;
-  box-shadow: 0 0 18px rgba(255, 255, 150, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #444;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  background-color: #1c1c1c;
+  overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  color: #eeeeee;
+  box-shadow: 0 0 8px 1px rgba(255, 230, 150, 0.1);
 }
 
 .album:hover {
-  transform: scale(1.01);
-  box-shadow: 0 0 24px rgba(255, 255, 100, 0.15);
+  box-shadow: 0 0 15px 4px rgba(255, 230, 150, 0.3);
+  border-color: #ffea75;
+  background-color: #292929;
 }
 
-/* SUMMARY */
+/* Widoczność po pojawieniu się */
+.album.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Górna część albumu */
 .summary {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 20px;
   cursor: pointer;
 }
 
-.album-cover {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  object-fit: cover;
-  box-shadow: 0 0 6px rgba(255, 255, 100, 0.1);
-  flex-shrink: 0;
-}
-
-/* TEXT BLOCK */
+/* Tekst */
 .text-block {
-  flex-grow: 1;
+  flex: 1;
 }
 
+/* Tytuł i rok */
 .title {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #fff6bf;
-  text-shadow: 0 0 6px rgba(255, 255, 150, 0.3);
+  color: #ffea75;
+  text-shadow: 0 0 6px rgba(255, 234, 117, 0.7);
 }
 
 .year {
-  font-size: 0.85rem;
-  color: #b4b466;
+  font-size: 0.9rem;
+  color: #aaa966;
+  margin-top: 4px;
+  font-weight: 400;
 }
 
-/* SPOTIFY ICON */
+/* Ikonka Spotify */
 .spotify-icon {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  width: 28px;
+  height: 28px;
+  filter: grayscale(30%);
+  transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  filter: drop-shadow(0 0 1.5px #ffea75);
 }
 
 .spotify-icon:hover {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 6px #1DB954);
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 5px #ffea75);
 }
 
-/* ARROW */
+/* Strzałka */
 .arrow {
-  font-size: 1.6rem;
-  transition: transform 0.4s ease;
-  color: #ffee8a;
-  user-select: none;
+  font-size: 1.4rem;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  color: #ffea75;
+  filter: drop-shadow(0 0 4px rgba(255, 234, 117, 0.5));
 }
 
+/* Po rozwinięciu strzałka się obraca i ma mocniejsze żółte światło */
 .album.expanded .arrow {
   transform: rotate(180deg);
+  filter: drop-shadow(0 0 8px rgba(255, 234, 117, 0.8));
 }
 
-/* DESCRIPTION */
+/* Opis albumu */
 .description {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 4px;
-  transition: all 0.5s ease;
-}
-
-.album.expanded .description {
-  opacity: 1;
-  max-height: 500px;
-  padding-top: 12px;
+  padding: 0 20px;
+  transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+  background-color: transparent;
+  color: #fffbcc;
+  font-weight: 400;
+  font-size: 1rem;
+  text-shadow: 0 0 4px rgba(255, 234, 117, 0.3);
 }
 
 .description p {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-/* RESPONSIVE */
+/* Po rozwinięciu */
+.album.expanded .description {
+  opacity: 1;
+  padding-bottom: 20px;
+  max-height: 1000px; /* duża wartość by zmieścić tekst */
+}
+
+/* Responsywność */
 @media (max-width: 600px) {
   .summary {
     flex-direction: column;
