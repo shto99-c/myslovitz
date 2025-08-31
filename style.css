@@ -1,109 +1,40 @@
-/* Reset i podstawa */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ... wcześniejszy reset i styl ... */
+
+body.dark {
+  background-color: #111;
+  color: #ddd;
 }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #ffffff;
-  color: #111;
-  line-height: 1.6;
+.album.open {
+  background-color: #333;
 }
 
-.container {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
+.spotify-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+  vertical-align: middle;
 }
 
-/* Styl albumu */
-.album {
-  border: 2px solid #000;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  transition: all 0.4s ease-in-out;
-  background-color: #fff;
-}
-
-.album[open] {
-  background-color: #f9f9f9;
-}
-
-/* Główny nagłówek albumu */
-.album summary {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  font-size: 1.05rem;
-  transition: background-color 0.3s;
-}
-
-.album summary:hover {
-  background-color: #f0f0f0;
-}
-
-/* Układ informacji */
-.album-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.album-info .title {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.album-info .year {
-  font-size: 0.8rem;
+/* Dark mode toggle button */
+.dark-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  border: 1px solid #555;
+  background: transparent;
   color: #555;
-  margin-top: 2px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
-/* Strzałka */
-.arrow {
-  transition: transform 0.3s ease;
-  font-size: 1.2rem;
+body.dark .dark-toggle {
+  color: #ddd;
+  border-color: #ddd;
 }
 
-.album[open] .arrow {
-  transform: rotate(180deg);
-}
-
-/* Opis z animacją */
-.description {
-  padding: 0 20px 20px;
-  font-size: 0.95rem;
-  color: #333;
-  animation: slideDown 0.35s ease-in-out;
-}
-
-/* Lepsza animacja */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsywność */
-@media (max-width: 600px) {
-  .album summary {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .arrow {
-    align-self: flex-end;
-    margin-top: 10px;
-  }
+/* Przewijanie albumu do widoku */
+.album.open {
+  scroll-margin-top: 80px;
 }
