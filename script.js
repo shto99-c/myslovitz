@@ -102,31 +102,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ——— INTERSECTION OBSERVER DLA ANIMACJI ———
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.2
-  };
-
+  // ——— ANIMACJE ———
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("fade-in");
       }
     });
-  }, observerOptions);
+  }, {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.2
+  });
 
   albums.forEach(album => {
     observer.observe(album);
   });
+
+  // ——— SIDEBAR TOGGLE ———
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener("click", () => {
+      document.body.classList.toggle("sidebar-open");
+    });
+  }
 });
-// —— SIDEBAR TOGGLE —— //
-const sidebarToggle = document.getElementById("sidebarToggle");
-
-if (sidebarToggle) {
-  sidebarToggle.addEventListener("click", () => {
-    document.body.classList.toggle("sidebar-open");
-  });
-}
-
