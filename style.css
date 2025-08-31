@@ -59,13 +59,13 @@ body.dark .dark-toggle {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
   transform: translateY(40px);
-  color: #111111;
+  color: #111111; /* Dodane na jasno w trybie jasnym */
 }
 
 body.dark .album {
   border-color: #aaa;
   background-color: #1a1a1a;
-  color: #eeeeee;
+  color: #eeeeee; /* Dodane jasny tekst w trybie dark */
 }
 
 /* Widoczność po pojawieniu się */
@@ -123,7 +123,7 @@ body.dark .year {
 .arrow {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
-  color: inherit;
+  color: inherit; /* żeby dziedziczyła kolor tekstu */
 }
 
 /* Opis albumu */
@@ -134,7 +134,7 @@ body.dark .year {
   padding: 0 20px;
   transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
   background-color: transparent;
-  color: inherit;
+  color: inherit; /* dziedziczy kolor tekstu */
 }
 
 .description p {
@@ -142,7 +142,7 @@ body.dark .year {
   margin-bottom: 20px;
 }
 
-/* Expanded state */
+/* Usunięto max-height z album.expanded .description, bo sterujemy tym w JS */
 .album.expanded .description {
   opacity: 1;
   padding-bottom: 20px;
@@ -162,86 +162,4 @@ body.dark .year {
   .spotify-icon {
     align-self: flex-end;
   }
-}
-
-/* —— SIDEBAR —— */
-#sidebarToggle {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  background-color: #ddd;
-  color: #111;
-  border-radius: 0 6px 6px 0;
-  padding: 8px 10px;
-  cursor: pointer;
-  z-index: 100;
-  transition: background-color 0.3s, transform 0.3s;
-  user-select: none;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-body.dark #sidebarToggle {
-  background-color: #333;
-  color: #fff;
-}
-
-#sidebarToggle:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Sidebar container */
-#sidebar {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
-  background-color: #1db954;
-  border-radius: 0 10px 10px 0;
-  box-shadow: 0 0 8px #1db954aa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: width 0.4s ease;
-  overflow: hidden;
-  z-index: 90;
-  cursor: pointer;
-}
-
-/* Sidebar po otwarciu */
-body.sidebar-open #sidebar {
-  width: 200px;
-  justify-content: flex-start;
-  padding-left: 20px;
-}
-
-/* Ikona Linktree */
-.sidebar-icon {
-  width: 36px;
-  height: 36px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.sidebar-icon:hover {
-  transform: scale(1.2);
-  filter: drop-shadow(0 0 6px #00cc99);
-}
-
-/* Animacja strzałki */
-#sidebarToggle .arrow {
-  display: none; /* ukryj jeśli nie używamy wewnątrz przycisku */
-}
-
-/* Obrót strzałki (tu w tekście strzałki) */
-body.sidebar-open #sidebarToggle {
-  transform: translateY(-50%) rotate(90deg);
-  left: 200px;
 }
