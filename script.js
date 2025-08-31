@@ -1,5 +1,3 @@
-// Futurystyczny skrypt interakcji i animacji dla albumów Myslovitz
-
 document.addEventListener("DOMContentLoaded", () => {
   const darkToggle = document.getElementById("darkModeToggle");
   const body = document.body;
@@ -17,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const isDark = body.classList.contains("dark");
     darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
 
-    // Animacja pulsowania przy zmianie trybu
     darkToggle.animate(
       [
         { transform: "scale(1)" },
@@ -38,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isExpanded) {
       desc.style.maxHeight = "0px";
+      desc.style.opacity = "0";
       arrow.style.transform = "rotate(0deg)";
       album.classList.remove("expanded");
     } else {
@@ -48,11 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
           const otherDesc = otherAlbum.querySelector(".description");
           const otherArrow = otherAlbum.querySelector(".arrow");
           otherDesc.style.maxHeight = "0px";
+          otherDesc.style.opacity = "0";
           otherArrow.style.transform = "rotate(0deg)";
         }
       });
 
       desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // Zapas na padding
+      desc.style.opacity = "1";
       arrow.style.transform = "rotate(180deg)";
       album.classList.add("expanded");
 
@@ -72,10 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Początkowe ukrycie
     desc.style.maxHeight = "0px";
+    desc.style.opacity = "0";
 
     // Kliknięcie nagłówka
     summary.style.cursor = "pointer";
     summary.addEventListener("click", () => toggleDescription(album));
+
+    // Zapobiegaj rozwijaniu po kliknięciu Spotify
+    spotifyIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
 
     // Efekty hover
     [arrow, spotifyIcon].forEach(icon => {
