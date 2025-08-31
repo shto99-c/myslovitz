@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
-  // ——— TRYB CIEMNY Z LOCALSTORAGE ———
+  // Tryb ciemny z localStorage
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark");
@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ——— ROZWIJANIE OPISU ———
   function toggleDescription(album) {
     const desc = album.querySelector(".description");
     const arrow = album.querySelector(".custom-arrow");
@@ -39,20 +38,24 @@ document.addEventListener("DOMContentLoaded", () => {
       desc.style.maxHeight = "0px";
       desc.style.opacity = "0";
       album.classList.remove("expanded");
+      if (arrow) arrow.classList.remove("rotated");
     } else {
-      // Zamknij inne otwarte
+      // Zamknij inne rozwinięte
       document.querySelectorAll(".album.expanded").forEach(otherAlbum => {
         if (otherAlbum !== album) {
           otherAlbum.classList.remove("expanded");
           const otherDesc = otherAlbum.querySelector(".description");
+          const otherArrow = otherAlbum.querySelector(".custom-arrow");
           otherDesc.style.maxHeight = "0px";
           otherDesc.style.opacity = "0";
+          if (otherArrow) otherArrow.classList.remove("rotated");
         }
       });
 
       desc.style.maxHeight = desc.scrollHeight + 24 + "px";
       desc.style.opacity = "1";
       album.classList.add("expanded");
+      if (arrow) arrow.classList.add("rotated");
 
       setTimeout(() => {
         album.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -60,39 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ——— INTERAKCJE ———
   albums.forEach(album => {
     const summary = album.querySelector(".summary");
     const desc = album.querySelector(".description");
-    const arrow = album.querySelector(".custom-arrow");
     const spotifyIcon = summary.querySelector(".spotify-icon");
+    const arrow = summary.querySelector(".custom-arrow");
 
-    // Ukrycie opisu
     desc.style.maxHeight = "0px";
     desc.style.opacity = "0";
 
-    // Kliknięcie na strzałkę
-    if (arrow) {
-      arrow.addEventListener("click", (e) => {
-        e.stopPropagation(); // Zapobiega kliknięciu na cały nagłówek
-        toggleDescription(album);
-      });
-    }
+    summary.style.cursor = "pointer";
+    summary.addEventListener("click", () => toggleDescription(album));
 
-    // Zapobiegaj rozwijaniu po kliknięciu Spotify
     if (spotifyIcon) {
-      spotifyIcon.addEventListener("click", (e) => {
-        e.stopPropagation();
-      });
+      spotifyIcon.addEventListener("click", e => e.stopPropagation());
     }
-
-    // Kliknięcie na całą belkę
-    summary.addEventListener("click", () => {
-      toggleDescription(album);
-    });
   });
 
-  // ——— ANIMACJA POJAWIANIA ———
+  // Animacje fade-in
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
