@@ -12,9 +12,6 @@ html, body {
   background-color: #ffffff;
   color: #111111;
   transition: background 0.3s ease, color 0.3s ease;
-  /* Pełna wysokość i szerokość, by tryb ciemny działał na całe tło */
-  width: 100%;
-  min-height: 100vh;
 }
 
 body.dark {
@@ -22,12 +19,42 @@ body.dark {
   color: #eeeeee;
 }
 
-/* Pojemnik na całą zawartość */
-.container {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 20px;
-  background: transparent;
+/* Loader (wczytywanie strony) */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+body.dark #loader {
+  background-color: #111;
+  color: #fff;
+}
+
+.spinner {
+  border: 5px solid #ccc;
+  border-top: 5px solid #1DB954;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Przycisk trybu ciemnego */
@@ -50,6 +77,14 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
+/* Pojemnik na całą zawartość */
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+  background: transparent;
+}
+
 /* Kafelek albumu */
 .album {
   border: 2px solid #000;
@@ -67,7 +102,7 @@ body.dark .album {
   background-color: #1a1a1a;
 }
 
-/* Widoczność po pojawieniu się */
+/* Po załadowaniu */
 .album.fade-in {
   opacity: 1;
   transform: translateY(0);
@@ -139,8 +174,8 @@ body.dark .year {
   margin-bottom: 20px;
 }
 
-/* Usunięto max-height z album.expanded .description, bo sterujemy tym w JS */
 .album.expanded .description {
+  max-height: 800px;
   opacity: 1;
   padding-bottom: 20px;
 }
