@@ -1,9 +1,16 @@
+// === LOADER ===
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+  document.querySelector(".container").style.display = "block";
+});
+
+// === INTERAKCJE ===
 document.addEventListener("DOMContentLoaded", () => {
   const darkToggle = document.getElementById("darkModeToggle");
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
-  // Tryb ciemny z localStorage
+  // — Tryb ciemny z localStorage —
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark");
@@ -15,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const isDark = body.classList.contains("dark");
     darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
 
-    // Animacja przy przełączeniu
+    // Animacja kliknięcia
     darkToggle.animate(
       [{ transform: "scale(1)" }, { transform: "scale(1.15)" }, { transform: "scale(1)" }],
       { duration: 350, easing: "ease-in-out" }
@@ -24,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
 
-  // Rozwijanie/zamykanie albumów
+  // — Rozwijanie/zamykanie opisów —
   function toggleDescription(album) {
     const desc = album.querySelector(".description");
     const arrow = album.querySelector(".arrow");
@@ -35,12 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
       arrow.style.transform = "rotate(0deg)";
       album.classList.remove("expanded");
     } else {
-      // Zamknij inne
+      // Zwijaj inne otwarte
       document.querySelectorAll(".album.expanded").forEach(otherAlbum => {
         if (otherAlbum !== album) {
           otherAlbum.classList.remove("expanded");
-          otherAlbum.querySelector(".description").style.maxHeight = "0px";
-          otherAlbum.querySelector(".arrow").style.transform = "rotate(0deg)";
+          const otherDesc = otherAlbum.querySelector(".description");
+          const otherArrow = otherAlbum.querySelector(".arrow");
+          otherDesc.style.maxHeight = "0px";
+          otherArrow.style.transform = "rotate(0deg)";
         }
       });
 
@@ -48,12 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
       arrow.style.transform = "rotate(180deg)";
       album.classList.add("expanded");
 
+      // Smooth scroll
       setTimeout(() => {
         album.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 250);
     }
   }
 
+  // — Interakcje na każdym albumie —
   albums.forEach(album => {
     const summary = album.querySelector(".summary");
     const desc = album.querySelector(".description");
@@ -62,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     desc.style.maxHeight = "0px";
 
+    summary.style.cursor = "pointer";
     summary.addEventListener("click", () => toggleDescription(album));
 
     [arrow, spotifyIcon].forEach(icon => {
@@ -77,27 +89,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Intersection Observer – animacja wejścia
+  // — Animacje wejścia —
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.2
+  };
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("fade-in");
       }
     });
-  }, {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.2
-  });
+  }, observerOptions);
 
   albums.forEach(album => {
     observer.observe(album);
   });
-});
-
-// Ukrycie loadera po załadowaniu strony
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  loader.style.opacity = "0";
-  loader.style.visibility = "hidden";
 });
