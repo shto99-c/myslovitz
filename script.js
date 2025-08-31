@@ -1,14 +1,33 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Tryb ciemny toggle
   const toggle = document.getElementById("darkModeToggle");
-  toggle.addEventListener("click", () => document.body.classList.toggle("dark"));
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    toggle.textContent = document.body.classList.contains("dark")
+      ? "☀️ Tryb jasny"
+      : "🌙 Tryb ciemny";
+  });
 
-  document.querySelectorAll(".album .summary").forEach(summary => {
+  // Rozwijanie albumów
+  const albums = document.querySelectorAll(".album");
+
+  albums.forEach((album) => {
+    const summary = album.querySelector(".summary");
+    const description = album.querySelector(".description");
+
     summary.addEventListener("click", () => {
-      const album = summary.parentElement;
-      const wasOpen = album.classList.contains("open");
-      document.querySelectorAll(".album.open").forEach(a => a.classList.remove("open"));
-      if (!wasOpen) {
+      const isOpen = album.classList.contains("open");
+
+      // Zamknij wszystkie inne
+      albums.forEach((el) => {
+        el.classList.remove("open");
+        el.querySelector(".description").style.height = 0;
+      });
+
+      if (!isOpen) {
         album.classList.add("open");
+        const scrollHeight = description.scrollHeight;
+        description.style.height = scrollHeight + "px";
         album.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
