@@ -3,59 +3,105 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
-  // Load dark mode preference
+  // ——— TRYB CIEMNY Z LOCALSTORAGE ———
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark");
-    darkToggle.textContent = "☀️ Tryb jasny";
+    if (darkToggle) darkToggle.textContent = "☀️ Tryb jasny";
   }
 
-  darkToggle.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    const isDark = body.classList.contains("dark");
-    darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
+  if (darkToggle) {
+    darkToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
 
-  albums.forEach(album => {
-    const summary = album.querySelector(".summary");
-    const arrow = album.querySelector(".arrow");
-    const description = album.querySelector(".description");
-    const spotifyIcon = album.querySelector(".spotify-icon");
+      darkToggle.animate(
+        [
+          { transform: "scale(1)" },
+          { transform: "scale(1.15)" },
+          { transform: "scale(1)" }
+        ],
+        { duration: 350, easing: "ease-in-out" }
+      );
 
-    // Initial state
-    description.style.maxHeight = "0px";
-    description.style.opacity = "0";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  }
 
-    summary.addEventListener("click", () => {
-      const isExpanded = album.classList.contains("expanded");
+  // ——— ROZWIJANIE / ZWIJANIE OPISU ———
+  function toggleDescription(album) {
+    const desc = album.querySelector(".description");
+    const isExpanded = album.classList.contains("expanded");
 
-      // Close all others
-      document.querySelectorAll(".album.expanded").forEach(other => {
-        if (other !== album) {
-          other.classList.remove("expanded");
-          other.querySelector(".description").style.maxHeight = "0px";
-          other.querySelector(".description").style.opacity = "0";
+    if (isExpanded) {
+      // Zwijamy
+      desc.style.maxHeight = "0";
+      desc.style.opacity = "0";
+      desc.style.paddingBottom = "0";
+      album.classList.remove("expanded");
+    } else {
+      // Zwijamy inne otwarte
+      document.querySelectorAll(".album.expanded").forEach(otherAlbum => {
+        if (otherAlbum !== album) {
+          otherAlbum.classList.remove("expanded");
+          const otherDesc = otherAlbum.querySelector(".description");
+          otherDesc.style.maxHeight = "0";
+          otherDesc.style.opacity = "0";
+          otherDesc.style.paddingBottom = "0";
         }
       });
 
-      // Toggle current
-      album.classList.toggle("expanded");
+      // Rozwijamy wybrany
+      desc.style.maxHeight = desc.scrollHeight + 20 + "px";
+      desc.style.opacity = "1";
+      desc.style.paddingBottom = "20px";
+      album.classList.add("expanded");
 
-      if (!isExpanded) {
-        description.style.maxHeight = description.scrollHeight + "px";
-        description.style.opacity = "1";
-        setTimeout(() => {
-          album.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 250);
-      } else {
-        description.style.maxHeight = "0px";
-        description.style.opacity = "0";
+      // Scroll do albumu po rozwinięciu
+      setTimeout(() => {
+        album.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+    }
+  }
+
+  // ——— INTERAKCJA NA KAŻDYM ALBUMIE ———
+  albums.forEach(album => {
+    const summary = album.querySelector(".summary");
+    const spotifyIcon = summary.querySelector(".spotify-icon");
+
+    // Początkowe ukrycie opisu
+    const desc = album.querySelector(".description");
+    desc.style.maxHeight = "0";
+    desc.style.opacity = "0";
+    desc.style.paddingBottom = "0";
+
+    // Kliknięcie nagłówka
+    summary.style.cursor = "pointer";
+    summary.addEventListener("click", () => toggleDescription(album));
+
+    // Zapobiegaj rozwijaniu po kliknięciu Spotify
+    if (spotifyIcon) {
+      spotifyIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
+  });
+
+  // ——— ANIMACJE WEJŚCIA ———
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in");
       }
     });
+  }, {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.2
+  });
 
-    if (spotifyIcon) {
-      spotifyIcon.addEventListener("click", e => e.stopPropagation());
-    }
+  albums.forEach(album => {
+    observer.observe(album);
   });
 });
