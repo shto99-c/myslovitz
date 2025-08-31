@@ -16,7 +16,7 @@ html, body {
   min-height: 100vh;
 }
 
-/* Tryb ciemny - odwrócony, jasny tryb */
+/* Tryb ciemny */
 body.dark {
   background: linear-gradient(135deg, #070720, #1a1a3d);
   color: #a0cfff;
@@ -134,10 +134,10 @@ body.dark {
 /* Strzałka */
 .arrow {
   font-size: 1.5rem;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   color: #65a7ff;
   user-select: none;
   filter: drop-shadow(0 0 4px #65a7ffaa);
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 /* Opis albumu */
@@ -146,7 +146,7 @@ body.dark {
   overflow: hidden;
   opacity: 0;
   padding: 0 24px;
-  transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.5s ease;
+  transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s ease;
   background-color: transparent;
   color: #b0c9ff;
   font-weight: 500;
