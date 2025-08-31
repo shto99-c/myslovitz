@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Tryb ciemny toggle
   const toggle = document.getElementById("darkModeToggle");
   toggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : "🌙 Tryb ciemny";
   });
 
-  // Rozwijanie albumów
   const albums = document.querySelectorAll(".album");
 
   albums.forEach((album) => {
@@ -18,16 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
     summary.addEventListener("click", () => {
       const isOpen = album.classList.contains("open");
 
-      // Zamknij wszystkie inne
+      // Zamknij wszystkie
       albums.forEach((el) => {
         el.classList.remove("open");
-        el.querySelector(".description").style.height = 0;
       });
 
       if (!isOpen) {
         album.classList.add("open");
-        const scrollHeight = description.scrollHeight;
-        description.style.height = scrollHeight + "px";
         album.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
