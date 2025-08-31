@@ -1,15 +1,17 @@
+/* Reset i podstawy */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
   background-color: #ffffff;
   color: #111111;
-  transition: background 0.3s, color 0.3s;
-  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body.dark {
@@ -17,12 +19,15 @@ body.dark {
   color: #eeeeee;
 }
 
+/* Pojemnik na całą zawartość */
 .container {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
+  background: transparent;
 }
 
+/* Przycisk trybu ciemnego */
 .dark-toggle {
   position: fixed;
   top: 20px;
@@ -34,6 +39,7 @@ body.dark {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.3s, color 0.3s;
 }
 
 body.dark .dark-toggle {
@@ -41,20 +47,31 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
+/* Kafelek albumu */
 .album {
   border: 2px solid #000;
   border-radius: 12px;
   margin-bottom: 24px;
   background-color: #fff;
   overflow: hidden;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(40px);
 }
 
 body.dark .album {
   border-color: #aaa;
-  background-color: #222;
+  background-color: #1a1a1a;
 }
 
+/* Widoczność po pojawieniu się */
+.album.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Górna część albumu */
 .summary {
   display: flex;
   align-items: center;
@@ -68,6 +85,7 @@ body.dark .album {
   flex: 1;
 }
 
+/* Tytuł i rok */
 .title {
   font-size: 1.2rem;
   font-weight: bold;
@@ -76,39 +94,50 @@ body.dark .album {
 .year {
   font-size: 0.85rem;
   color: #777;
+  margin-top: 4px;
 }
 
 body.dark .year {
   color: #bbb;
 }
 
+/* Ikonka Spotify */
 .spotify-icon {
   width: 24px;
   height: 24px;
   filter: grayscale(0%);
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
 }
 
+.spotify-icon:hover {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 6px #1DB954);
+}
+
+/* Strzałka */
 .arrow {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
+/* Opis albumu */
 .description {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
   padding: 0 20px;
-  transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+  transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+  background-color: transparent;
 }
 
 .description p {
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .album.expanded .description {
-  max-height: 500px;
+  max-height: 800px;
   opacity: 1;
   padding-bottom: 20px;
 }
@@ -117,30 +146,14 @@ body.dark .year {
   transform: rotate(180deg);
 }
 
-.spotify-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
-  background: #1DB954;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  margin: 0 auto 40px;
-  box-shadow: 0 4px 10px rgba(29, 185, 84, 0.3);
-}
+/* Responsywność (opcjonalnie) */
+@media (max-width: 600px) {
+  .summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.spotify-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(29, 185, 84, 0.5);
-}
-
-.spotify-button svg {
-  width: 28px;
-  height: 28px;
-  fill: white;
+  .spotify-icon {
+    align-self: flex-end;
+  }
 }
