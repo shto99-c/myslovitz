@@ -6,14 +6,14 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fff;
-  color: #111;
+  background-color: #ffffff;
+  color: #111111;
   transition: background 0.3s, color 0.3s;
 }
 
 body.dark {
-  background-color: #111;
-  color: #eee;
+  background-color: #111111;
+  color: #eeeeee;
 }
 
 .container {
@@ -22,16 +22,15 @@ body.dark {
   padding: 20px;
 }
 
-/* Tryb ciemny toggle */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 100;
+  z-index: 10;
   padding: 8px 14px;
   background: #ddd;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
 }
@@ -41,18 +40,17 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
-/* Albumy */
 .album {
   border: 2px solid #000;
   border-radius: 12px;
-  margin-bottom: 20px;
-  overflow: hidden;
+  margin-bottom: 24px;
   background-color: #fff;
+  overflow: hidden;
   transition: background-color 0.3s ease;
 }
 
 body.dark .album {
-  border-color: #999;
+  border-color: #aaa;
   background-color: #222;
 }
 
@@ -60,50 +58,60 @@ body.dark .album {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   padding: 20px;
   cursor: pointer;
 }
 
-.album-info {
-  display: flex;
-  flex-direction: column;
+.text-block {
+  flex: 1;
 }
 
 .title {
+  font-size: 1.2rem;
   font-weight: bold;
-  font-size: 1.1rem;
 }
 
 .year {
-  font-size: 0.8rem;
-  color: #555;
+  font-size: 0.85rem;
+  color: #777;
 }
 
 body.dark .year {
-  color: #aaa;
+  color: #bbb;
 }
 
 .spotify-icon {
   width: 24px;
   height: 24px;
-  margin: 0 10px;
   filter: grayscale(0%);
+  transition: transform 0.2s;
+}
+
+.spotify-icon:hover {
+  transform: scale(1.2);
 }
 
 .arrow {
-  transition: transform 0.3s ease;
   font-size: 1.2rem;
+  transition: transform 0.3s ease;
 }
 
 .description {
-  height: 0;
+  max-height: 0;
   overflow: hidden;
   opacity: 0;
   padding: 0 20px;
-  transition: height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
+  transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.description p {
+  line-height: 1.6;
+  margin-bottom: 12px;
 }
 
 .album.open .description {
+  max-height: 400px;
   opacity: 1;
   padding-bottom: 20px;
 }
