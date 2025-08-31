@@ -1,25 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const albums = document.querySelectorAll(".album");
+  const toggle = document.getElementById("darkModeToggle");
+  toggle.addEventListener("click", () => document.body.classList.toggle("dark"));
 
-  albums.forEach((album) => {
-    const summary = album.querySelector(".summary");
-    const description = album.querySelector(".description");
-
+  document.querySelectorAll(".album .summary").forEach(summary => {
     summary.addEventListener("click", () => {
-      const isOpen = album.classList.contains("open");
-
-      // Zamykamy wszystkie
-      albums.forEach((el) => {
-        el.classList.remove("open");
-        el.querySelector(".description").style.height = 0;
-      });
-
-      if (!isOpen) {
+      const album = summary.parentElement;
+      const wasOpen = album.classList.contains("open");
+      document.querySelectorAll(".album.open").forEach(a => a.classList.remove("open"));
+      if (!wasOpen) {
         album.classList.add("open");
-
-        // Ustawiamy height na scrollHeight dla animacji
-        const scrollHeight = description.scrollHeight;
-        description.style.height = scrollHeight + "px";
+        album.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
   });
