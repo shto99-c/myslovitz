@@ -3,32 +3,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
-  // ——— BLOKADA SCROLLA NA CAŁEJ STRONIE ———
-  body.classList.add("noscroll");
+  // ——— BLOKADA SCROLLA NA CAŁEJ STRONIE NA STAŁE ———
+  body.style.overflow = "hidden";
+  body.style.height = "100vh";
 
   // ——— TRYB CIEMNY Z LOCALSTORAGE ———
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     body.classList.add("dark");
-    darkToggle.textContent = "☀️ Tryb jasny";
+    if (darkToggle) darkToggle.textContent = "☀️ Tryb jasny";
   }
 
-  darkToggle.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    const isDark = body.classList.contains("dark");
-    darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
+  if (darkToggle) {
+    darkToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      darkToggle.textContent = isDark ? "☀️ Tryb jasny" : "🌙 Tryb ciemny";
 
-    darkToggle.animate(
-      [
-        { transform: "scale(1)" },
-        { transform: "scale(1.15)" },
-        { transform: "scale(1)" }
-      ],
-      { duration: 350, easing: "ease-in-out" }
-    );
+      darkToggle.animate(
+        [
+          { transform: "scale(1)" },
+          { transform: "scale(1.15)" },
+          { transform: "scale(1)" }
+        ],
+        { duration: 350, easing: "ease-in-out" }
+      );
 
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  });
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+  }
 
   // ——— ROZWIJANIE / ZWIJANIE OPISU ———
   function toggleDescription(album) {
@@ -82,12 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
     summary.addEventListener("click", () => toggleDescription(album));
 
     // Zapobiegaj rozwijaniu po kliknięciu Spotify
-    spotifyIcon.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
+    if (spotifyIcon) {
+      spotifyIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
 
     // Efekty hover
     [arrow, spotifyIcon].forEach(icon => {
+      if (!icon) return;
       icon.style.transition = "transform 0.3s ease, filter 0.3s ease";
       icon.addEventListener("mouseenter", () => {
         icon.style.transform = "scale(1.25) rotate(10deg)";
