@@ -12,6 +12,9 @@ html, body {
   background-color: #ffffff;
   color: #111111;
   transition: background 0.3s ease, color 0.3s ease;
+  /* Pełna wysokość i szerokość, by tryb ciemny działał na całe tło */
+  width: 100%;
+  min-height: 100vh;
 }
 
 body.dark {
@@ -136,8 +139,8 @@ body.dark .year {
   margin-bottom: 20px;
 }
 
+/* Usunięto max-height z album.expanded .description, bo sterujemy tym w JS */
 .album.expanded .description {
-  max-height: 800px;
   opacity: 1;
   padding-bottom: 20px;
 }
@@ -146,7 +149,7 @@ body.dark .year {
   transform: rotate(180deg);
 }
 
-/* Responsywność (opcjonalnie) */
+/* Responsywność */
 @media (max-width: 600px) {
   .summary {
     flex-direction: column;
