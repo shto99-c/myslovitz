@@ -7,56 +7,87 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button id="darkModeToggle" class="dark-toggle">Tryb ciemny</button>
   <div class="container">
-
-    <!-- Album 1 -->
-    <details class="album">
-      <summary>
+    <!-- Albumy z opisami i ikoną Spotify -->
+    <!-- Przykład dla "Myslovitz" i "Sun Machine" oraz "Z rozmyślań przy śniadaniu" i "Korova Milky Bar" i "Happiness Is Easy" -->
+    <div class="album" id="album-myslovitz">
+      <div class="summary">
         <div class="album-info">
           <span class="title">Myslovitz</span>
           <span class="year">1995</span>
         </div>
+        <a href="https://open.spotify.com/album/???" target="_blank" class="spotify-link">
+          <img src="spotify-icon.png" alt="Spotify" class="spotify-icon">
+        </a>
         <span class="arrow">&#9660;</span>
-      </summary>
-      <div class="description">
-        <p>
-          <strong>Myslovitz</strong> to debiutancki album zespołu wydany w 1995 roku. Zawiera utwory takie jak "Zgon", "Maj" czy "Krótka Piosenka o Miłości".
-        </p>
       </div>
-    </details>
+      <div class="description">…pełny opis albumu…</div>
+    </div>
 
-    <!-- Album 2 -->
-    <details class="album">
-      <summary>
+    <div class="album" id="album-sun-machine">
+      <div class="summary">
         <div class="album-info">
           <span class="title">Sun Machine</span>
           <span class="year">1996</span>
         </div>
+        <a href="https://open.spotify.com/album/???" target="_blank" class="spotify-link">
+          <img src="spotify-icon.png" alt="Spotify" class="spotify-icon">
+        </a>
         <span class="arrow">&#9660;</span>
-      </summary>
-      <div class="description">
-        <p>
-          <strong>Sun Machine</strong> to drugi album studyjny Myslovitz z 1996 roku. Znalazł się na nim przebój "Z twarzą Marilyn Monroe".
-        </p>
       </div>
-    </details>
+      <div class="description">…opis z Wikipedii…</div>
+    </div>
 
-    <!-- Album 3 -->
-    <details class="album">
-      <summary>
+    <div class="album" id="album-z-rozmyslan">
+      <div class="summary">
         <div class="album-info">
-          <span class="title">Miłość w czasach popkultury</span>
-          <span class="year">1999</span>
+          <span class="title">Z rozmyślań przy śniadaniu</span>
+          <span class="year">1997</span>
         </div>
+        <a href="https://open.spotify.com/album/???" target="_blank" class="spotify-link">
+          <img src="spotify-icon.png" alt="Spotify" class="spotify-icon">
+        </a>
         <span class="arrow">&#9660;</span>
-      </summary>
-      <div class="description">
-        <p>
-          <strong>Miłość w czasach popkultury</strong> przyniosła zespołowi ogromny sukces. Zawiera m.in. "Długość dźwięku samotności".
-        </p>
       </div>
-    </details>
+      <div class="description">
+        <p>...</p>
+      </div>
+    </div>
+
+    <div class="album" id="album-korova">
+      <div class="summary">
+        <div class="album-info">
+          <span class="title">Korova Milky Bar</span>
+          <span class="year">2002</span>
+        </div>
+        <a href="https://open.spotify.com/album/???" target="_blank" class="spotify-link">
+          <img src="spotify-icon.png" alt="Spotify" class="spotify-icon">
+        </a>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="description">
+        <p>...</p>
+      </div>
+    </div>
+
+    <div class="album" id="album-happiness">
+      <div class="summary">
+        <div class="album-info">
+          <span class="title">Happiness Is Easy</span>
+          <span class="year">2006</span>
+        </div>
+        <a href="https://open.spotify.com/album/???" target="_blank" class="spotify-link">
+          <img src="spotify-icon.png" alt="Spotify" class="spotify-icon">
+        </a>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="description">
+        <p>...</p>
+      </div>
+    </div>
 
   </div>
+  <script src="script.js"></script>
 </body>
 </html>
