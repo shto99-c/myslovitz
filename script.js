@@ -29,56 +29,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ——— ROZWIJANIE / ZWIJANIE OPISU ———
+  // ——— ROZWIJANIE OPISU ———
   function toggleDescription(album) {
     const desc = album.querySelector(".description");
-    const arrow = album.querySelector(".arrow");
+    const arrow = album.querySelector(".custom-arrow");
     const isExpanded = album.classList.contains("expanded");
 
     if (isExpanded) {
       desc.style.maxHeight = "0px";
       desc.style.opacity = "0";
-      arrow.style.transform = "rotate(0deg)";
       album.classList.remove("expanded");
     } else {
-      // Zwijaj inne otwarte
+      // Zamknij inne otwarte
       document.querySelectorAll(".album.expanded").forEach(otherAlbum => {
         if (otherAlbum !== album) {
           otherAlbum.classList.remove("expanded");
           const otherDesc = otherAlbum.querySelector(".description");
-          const otherArrow = otherAlbum.querySelector(".arrow");
           otherDesc.style.maxHeight = "0px";
           otherDesc.style.opacity = "0";
-          otherArrow.style.transform = "rotate(0deg)";
         }
       });
 
-      desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // Zapas na padding
+      desc.style.maxHeight = desc.scrollHeight + 24 + "px";
       desc.style.opacity = "1";
-      arrow.style.transform = "rotate(180deg)";
       album.classList.add("expanded");
 
-      // Smooth scroll
       setTimeout(() => {
         album.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 250);
     }
   }
 
-  // ——— INTERAKCJA NA KAŻDYM ALBUMIE ———
+  // ——— INTERAKCJE ———
   albums.forEach(album => {
     const summary = album.querySelector(".summary");
     const desc = album.querySelector(".description");
-    const arrow = summary.querySelector(".arrow");
+    const arrow = album.querySelector(".custom-arrow");
     const spotifyIcon = summary.querySelector(".spotify-icon");
 
-    // Początkowe ukrycie
+    // Ukrycie opisu
     desc.style.maxHeight = "0px";
     desc.style.opacity = "0";
 
-    // Kliknięcie nagłówka
-    summary.style.cursor = "pointer";
-    summary.addEventListener("click", () => toggleDescription(album));
+    // Kliknięcie na strzałkę
+    if (arrow) {
+      arrow.addEventListener("click", (e) => {
+        e.stopPropagation(); // Zapobiega kliknięciu na cały nagłówek
+        toggleDescription(album);
+      });
+    }
 
     // Zapobiegaj rozwijaniu po kliknięciu Spotify
     if (spotifyIcon) {
@@ -87,35 +86,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Efekty hover
-    [arrow, spotifyIcon].forEach(icon => {
-      if (!icon) return;
-      icon.style.transition = "transform 0.3s ease, filter 0.3s ease";
-      icon.addEventListener("mouseenter", () => {
-        icon.style.transform = "scale(1.25) rotate(10deg)";
-        icon.style.filter = "drop-shadow(0 0 6px #1DB954)";
-      });
-      icon.addEventListener("mouseleave", () => {
-        icon.style.transform = "scale(1) rotate(0deg)";
-        icon.style.filter = "none";
-      });
+    // Kliknięcie na całą belkę
+    summary.addEventListener("click", () => {
+      toggleDescription(album);
     });
   });
 
-  // ——— INTERSECTION OBSERVER DLA ANIMACJI ———
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.2
-  };
-
+  // ——— ANIMACJA POJAWIANIA ———
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("fade-in");
       }
     });
-  }, observerOptions);
+  }, {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.2
+  });
 
   albums.forEach(album => {
     observer.observe(album);
