@@ -1,3 +1,6 @@
+/* Import czcionki Nunito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+
 /* Reset i podstawy */
 * {
   margin: 0;
@@ -7,19 +10,13 @@
 
 html, body {
   height: 100%;
-  font-family: 'Orbitron', 'Segoe UI', sans-serif;
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
-  background-color: #0f0f1e;
-  color: #e0e0ff;
-  transition: background 0.4s ease, color 0.4s ease;
+  background-color: #111111;
+  color: #eeeeee;
+  transition: background 0.3s ease, color 0.3s ease;
   width: 100%;
   min-height: 100vh;
-}
-
-/* Tryb ciemny */
-body.dark {
-  background: linear-gradient(135deg, #070720, #1a1a3d);
-  color: #a0cfff;
 }
 
 /* Pojemnik na całą zawartość */
@@ -27,9 +24,7 @@ body.dark {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
-  background: rgba(30,30,60,0.5);
-  border-radius: 16px;
-  box-shadow: 0 0 25px #4a90e2aa;
+  background: transparent;
 }
 
 /* Przycisk trybu ciemnego */
@@ -38,47 +33,46 @@ body.dark {
   top: 20px;
   right: 20px;
   z-index: 10;
-  padding: 10px 16px;
-  background: #151540;
-  border: 2px solid #3f6ef0;
-  border-radius: 12px;
+  padding: 8px 14px;
+  background: #222;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  color: #a0cfff;
-  text-shadow: 0 0 6px #3f6ef0;
-  transition: background 0.3s, color 0.3s, box-shadow 0.4s;
+  font-size: 14px;
+  color: #ffea75; /* delikatny żółty */
+  box-shadow: 0 0 6px 2px rgba(255, 234, 117, 0.3);
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
+
 .dark-toggle:hover {
-  background: #3f6ef0;
-  color: #0f0f1e;
-  box-shadow: 0 0 12px #3f6ef0;
+  box-shadow: 0 0 10px 4px rgba(255, 234, 117, 0.5);
 }
 
 /* Kafelek albumu */
 .album {
-  border: 2px solid #3f6ef0;
-  border-radius: 16px;
-  margin-bottom: 30px;
-  background-color: rgba(15, 15, 30, 0.9);
+  border: 2px solid #444;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  background-color: #1c1c1c;
   overflow: hidden;
-  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease;
   opacity: 0;
   transform: translateY(40px);
-  color: #a0cfff;
-  box-shadow: 0 0 12px #3f6ef0aa;
-  cursor: default;
+  color: #eeeeee;
+  box-shadow: 0 0 8px 1px rgba(255, 230, 150, 0.1);
 }
+
 .album:hover {
-  box-shadow: 0 0 24px #65a7ff;
-  border-color: #65a7ff;
+  box-shadow: 0 0 15px 4px rgba(255, 230, 150, 0.3);
+  border-color: #ffea75;
+  background-color: #292929;
 }
 
 /* Widoczność po pojawieniu się */
 .album.fade-in {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 /* Górna część albumu */
@@ -86,16 +80,9 @@ body.dark {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 20px 24px;
+  gap: 10px;
+  padding: 20px;
   cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease;
-  border-radius: 16px;
-}
-.summary:hover {
-  background: rgba(65, 105, 255, 0.15);
-  box-shadow: 0 0 10px #65a7ffaa;
 }
 
 /* Tekst */
@@ -105,39 +92,46 @@ body.dark {
 
 /* Tytuł i rok */
 .title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-shadow: 0 0 8px #7db9ff;
-  letter-spacing: 0.03em;
-}
-.year {
-  font-size: 1rem;
-  color: #88b1f9;
-  margin-top: 4px;
+  font-size: 1.3rem;
   font-weight: 600;
-  text-shadow: 0 0 5px #4f7fdf;
+  color: #ffea75;
+  text-shadow: 0 0 6px rgba(255, 234, 117, 0.7);
+}
+
+.year {
+  font-size: 0.9rem;
+  color: #aaa966;
+  margin-top: 4px;
+  font-weight: 400;
 }
 
 /* Ikonka Spotify */
 .spotify-icon {
   width: 28px;
   height: 28px;
-  filter: drop-shadow(0 0 3px #1DB954);
-  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: grayscale(30%);
+  transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  filter: drop-shadow(0 0 1.5px #ffea75);
 }
+
 .spotify-icon:hover {
   transform: scale(1.3);
-  filter: drop-shadow(0 0 10px #1DB954);
+  filter: drop-shadow(0 0 5px #ffea75);
 }
 
 /* Strzałka */
 .arrow {
-  font-size: 1.5rem;
-  color: #65a7ff;
-  user-select: none;
-  filter: drop-shadow(0 0 4px #65a7ffaa);
+  font-size: 1.4rem;
   transition: transform 0.4s ease, filter 0.4s ease;
+  color: #ffea75;
+  filter: drop-shadow(0 0 4px rgba(255, 234, 117, 0.5));
+}
+
+/* Po rozwinięciu strzałka się obraca i ma mocniejsze żółte światło */
+.album.expanded .arrow {
+  transform: rotate(180deg);
+  filter: drop-shadow(0 0 8px rgba(255, 234, 117, 0.8));
 }
 
 /* Opis albumu */
@@ -145,13 +139,13 @@ body.dark {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 24px;
-  transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s ease;
+  padding: 0 20px;
+  transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
   background-color: transparent;
-  color: #b0c9ff;
-  font-weight: 500;
-  line-height: 1.6;
-  user-select: text;
+  color: #fffbcc;
+  font-weight: 400;
+  font-size: 1rem;
+  text-shadow: 0 0 4px rgba(255, 234, 117, 0.3);
 }
 
 .description p {
@@ -163,11 +157,6 @@ body.dark {
   opacity: 1;
   padding-bottom: 20px;
   max-height: 1000px; /* duża wartość by zmieścić tekst */
-}
-
-.album.expanded .arrow {
-  transform: rotate(180deg);
-  filter: drop-shadow(0 0 8px #65a7ff);
 }
 
 /* Responsywność */
