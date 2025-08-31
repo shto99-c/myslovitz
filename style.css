@@ -1,4 +1,4 @@
-/* Reset i podstawy */
+/* RESET I PODSTAWY */
 * {
   margin: 0;
   padding: 0;
@@ -19,45 +19,7 @@ body.dark {
   color: #eeeeee;
 }
 
-/* Loader (wczytywanie strony) */
-#loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
-}
-
-body.dark #loader {
-  background-color: #111;
-  color: #fff;
-}
-
-.spinner {
-  border: 5px solid #ccc;
-  border-top: 5px solid #1DB954;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Przycisk trybu ciemnego */
+/* PRZYCISK TRYBU CIEMNEGO */
 .dark-toggle {
   position: fixed;
   top: 20px;
@@ -77,15 +39,14 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
-/* Pojemnik na całą zawartość */
+/* KONTAINER NA ALBUMY */
 .container {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
-  background: transparent;
 }
 
-/* Kafelek albumu */
+/* ALBUMY */
 .album {
   border: 2px solid #000;
   border-radius: 12px;
@@ -102,14 +63,13 @@ body.dark .album {
   background-color: #1a1a1a;
 }
 
-/* Po załadowaniu */
 .album.fade-in {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Górna część albumu */
+/* GÓRNA CZĘŚĆ ALBUMU */
 .summary {
   display: flex;
   align-items: center;
@@ -123,7 +83,6 @@ body.dark .album {
   flex: 1;
 }
 
-/* Tytuł i rok */
 .title {
   font-size: 1.2rem;
   font-weight: bold;
@@ -139,7 +98,7 @@ body.dark .year {
   color: #bbb;
 }
 
-/* Ikonka Spotify */
+/* IKONY */
 .spotify-icon {
   width: 24px;
   height: 24px;
@@ -153,13 +112,12 @@ body.dark .year {
   filter: drop-shadow(0 0 6px #1DB954);
 }
 
-/* Strzałka */
 .arrow {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
-/* Opis albumu */
+/* OPIS ALBUMU */
 .description {
   max-height: 0;
   overflow: hidden;
@@ -184,7 +142,7 @@ body.dark .year {
   transform: rotate(180deg);
 }
 
-/* Responsywność */
+/* RESPONSYWNOŚĆ */
 @media (max-width: 600px) {
   .summary {
     flex-direction: column;
@@ -194,4 +152,46 @@ body.dark .year {
   .spotify-icon {
     align-self: flex-end;
   }
+}
+
+/* === LOADER === */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #0e0e0e;
+  color: #00ff99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(0,255,153,0.1);
+  border-top: 6px solid #00ff99;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.loading-text {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #00ff99;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+body.loaded #loader {
+  opacity: 0;
+  visibility: hidden;
 }
