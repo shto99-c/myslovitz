@@ -1,4 +1,4 @@
-/* RESET + SYSTEM */
+/* Reset i podstawy */
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +6,7 @@
 }
 
 html, body {
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
   background-color: #ffffff;
@@ -18,31 +19,27 @@ body.dark {
   color: #eeeeee;
 }
 
-/* CONTAINER */
+/* Pojemnik na całą zawartość */
 .container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 60px auto;
   padding: 20px;
+  background: transparent;
 }
 
-/* TOGGLE BUTTON */
+/* Przycisk trybu ciemnego */
 .dark-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 10;
-  padding: 10px 16px;
+  padding: 8px 14px;
   background: #ddd;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: background 0.3s, color 0.3s, transform 0.3s;
-}
-
-.dark-toggle:hover {
-  transform: scale(1.05);
+  transition: background 0.3s, color 0.3s;
 }
 
 body.dark .dark-toggle {
@@ -50,35 +47,37 @@ body.dark .dark-toggle {
   color: #fff;
 }
 
-/* ALBUM */
+/* Kafelek albumu */
 .album {
   border: 2px solid #000;
-  border-radius: 16px;
-  margin-bottom: 28px;
+  border-radius: 12px;
+  margin-bottom: 24px;
   background-color: #fff;
   overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
-  transform: translateY(20px);
-  transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
-}
-
-.album.fade-in {
-  opacity: 1;
-  transform: translateY(0);
+  transform: translateY(40px);
 }
 
 body.dark .album {
+  border-color: #aaa;
   background-color: #1a1a1a;
-  border-color: #888;
 }
 
-/* SUMMARY BAR */
+/* Widoczność po pojawieniu się */
+.album.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Górna część albumu */
 .summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  gap: 12px;
+  gap: 10px;
+  padding: 20px;
   cursor: pointer;
 }
 
@@ -86,58 +85,75 @@ body.dark .album {
   flex: 1;
 }
 
+/* Tytuł i rok */
 .title {
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .year {
   font-size: 0.85rem;
   color: #777;
+  margin-top: 4px;
 }
 
 body.dark .year {
-  color: #aaa;
+  color: #bbb;
 }
 
-/* SPOTIFY ICON */
+/* Ikonka Spotify */
 .spotify-icon {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
+  filter: grayscale(0%);
   transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
 }
 
 .spotify-icon:hover {
-  transform: scale(1.2) rotate(10deg);
+  transform: scale(1.25);
   filter: drop-shadow(0 0 6px #1DB954);
 }
 
-/* ARROW */
+/* Strzałka */
 .arrow {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
 }
 
-/* DESCRIPTION */
+/* Opis albumu */
 .description {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 24px;
+  padding: 0 20px;
   transition: max-height 0.6s ease, opacity 0.4s ease, padding 0.4s ease;
+  background-color: transparent;
 }
 
 .description p {
   line-height: 1.6;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .album.expanded .description {
+  max-height: 800px;
   opacity: 1;
-  padding-bottom: 24px;
-  max-height: 1000px;
+  padding-bottom: 20px;
 }
 
 .album.expanded .arrow {
   transform: rotate(180deg);
+}
+
+/* Responsywność (opcjonalnie) */
+@media (max-width: 600px) {
+  .summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .spotify-icon {
+    align-self: flex-end;
+  }
 }
