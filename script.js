@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const albums = document.querySelectorAll(".album");
 
+  // ——— BLOKADA SCROLLA NA CAŁEJ STRONIE ———
+  body.classList.add("noscroll");
+
   // ——— TRYB CIEMNY Z LOCALSTORAGE ———
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
@@ -21,11 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         { transform: "scale(1.15)" },
         { transform: "scale(1)" }
       ],
-      { duration: 300, easing: "ease-in-out" }
+      { duration: 350, easing: "ease-in-out" }
     );
-
-    // Dodajemy płynne przejście kolorów body (na wszelki wypadek)
-    body.style.transition = "background-color 0.3s ease, color 0.3s ease";
 
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
@@ -37,8 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const isExpanded = album.classList.contains("expanded");
 
     if (isExpanded) {
-      // Zwinięcie z animacją
-      desc.style.maxHeight = null; // usuń inline maxHeight
+      desc.style.maxHeight = "0px";
       desc.style.opacity = "0";
       arrow.style.transform = "rotate(0deg)";
       album.classList.remove("expanded");
@@ -49,22 +48,21 @@ document.addEventListener("DOMContentLoaded", () => {
           otherAlbum.classList.remove("expanded");
           const otherDesc = otherAlbum.querySelector(".description");
           const otherArrow = otherAlbum.querySelector(".arrow");
-          otherDesc.style.maxHeight = null;
+          otherDesc.style.maxHeight = "0px";
           otherDesc.style.opacity = "0";
           otherArrow.style.transform = "rotate(0deg)";
         }
       });
 
-      // Rozwinięcie z animacją
-      desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // padding zapas
+      desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // Zapas na padding
       desc.style.opacity = "1";
       arrow.style.transform = "rotate(180deg)";
       album.classList.add("expanded");
 
-      // Smooth scroll do albumu
+      // Smooth scroll
       setTimeout(() => {
         album.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 300);
+      }, 250);
     }
   }
 
@@ -75,18 +73,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const arrow = summary.querySelector(".arrow");
     const spotifyIcon = summary.querySelector(".spotify-icon");
 
-    // Początkowe ukrycie opisu (ważne - bez inline maxHeight, żeby CSS mógł działać)
-    desc.style.maxHeight = null;
+    // Początkowe ukrycie
+    desc.style.maxHeight = "0px";
     desc.style.opacity = "0";
 
-    // Kliknięcie nagłówka rozwija/zawija opis
+    // Kliknięcie nagłówka
     summary.style.cursor = "pointer";
     summary.addEventListener("click", () => toggleDescription(album));
 
     // Zapobiegaj rozwijaniu po kliknięciu Spotify
-    spotifyIcon.addEventListener("click", (e) => e.stopPropagation());
+    spotifyIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
 
-    // Animacje hover ikon
+    // Efekty hover
     [arrow, spotifyIcon].forEach(icon => {
       icon.style.transition = "transform 0.3s ease, filter 0.3s ease";
       icon.addEventListener("mouseenter", () => {
@@ -100,18 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ——— INTERSECTION OBSERVER DLA ANIMACJI FADE-IN ———
+  // ——— INTERSECTION OBSERVER DLA ANIMACJI ———
   const observerOptions = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.15
+    threshold: 0.2
   };
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("fade-in");
-        observer.unobserve(entry.target); // obserwuj tylko raz
       }
     });
   }, observerOptions);
