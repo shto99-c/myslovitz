@@ -21,8 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
         { transform: "scale(1.15)" },
         { transform: "scale(1)" }
       ],
-      { duration: 350, easing: "ease-in-out" }
+      { duration: 300, easing: "ease-in-out" }
     );
+
+    // Dodajemy płynne przejście kolorów body (na wszelki wypadek)
+    body.style.transition = "background-color 0.3s ease, color 0.3s ease";
 
     localStorage.setItem("theme", isDark ? "dark" : "light");
   });
@@ -34,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isExpanded = album.classList.contains("expanded");
 
     if (isExpanded) {
-      desc.style.maxHeight = "0px";
+      // Zwinięcie z animacją
+      desc.style.maxHeight = null; // usuń inline maxHeight
       desc.style.opacity = "0";
       arrow.style.transform = "rotate(0deg)";
       album.classList.remove("expanded");
@@ -45,21 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
           otherAlbum.classList.remove("expanded");
           const otherDesc = otherAlbum.querySelector(".description");
           const otherArrow = otherAlbum.querySelector(".arrow");
-          otherDesc.style.maxHeight = "0px";
+          otherDesc.style.maxHeight = null;
           otherDesc.style.opacity = "0";
           otherArrow.style.transform = "rotate(0deg)";
         }
       });
 
-      desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // Zapas na padding
+      // Rozwinięcie z animacją
+      desc.style.maxHeight = desc.scrollHeight + 24 + "px"; // padding zapas
       desc.style.opacity = "1";
       arrow.style.transform = "rotate(180deg)";
       album.classList.add("expanded");
 
-      // Smooth scroll
+      // Smooth scroll do albumu
       setTimeout(() => {
         album.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 250);
+      }, 300);
     }
   }
 
@@ -70,20 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const arrow = summary.querySelector(".arrow");
     const spotifyIcon = summary.querySelector(".spotify-icon");
 
-    // Początkowe ukrycie
-    desc.style.maxHeight = "0px";
+    // Początkowe ukrycie opisu (ważne - bez inline maxHeight, żeby CSS mógł działać)
+    desc.style.maxHeight = null;
     desc.style.opacity = "0";
 
-    // Kliknięcie nagłówka
+    // Kliknięcie nagłówka rozwija/zawija opis
     summary.style.cursor = "pointer";
     summary.addEventListener("click", () => toggleDescription(album));
 
     // Zapobiegaj rozwijaniu po kliknięciu Spotify
-    spotifyIcon.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
+    spotifyIcon.addEventListener("click", (e) => e.stopPropagation());
 
-    // Efekty hover
+    // Animacje hover ikon
     [arrow, spotifyIcon].forEach(icon => {
       icon.style.transition = "transform 0.3s ease, filter 0.3s ease";
       icon.addEventListener("mouseenter", () => {
@@ -97,17 +100,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ——— INTERSECTION OBSERVER DLA ANIMACJI ———
+  // ——— INTERSECTION OBSERVER DLA ANIMACJI FADE-IN ———
   const observerOptions = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.2
+    threshold: 0.15
   };
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("fade-in");
+        observer.unobserve(entry.target); // obserwuj tylko raz
       }
     });
   }, observerOptions);
