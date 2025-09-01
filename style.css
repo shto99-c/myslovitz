@@ -178,9 +178,21 @@ html, body {
     align-self: flex-end;
   }
 
-  .album-cover {
-    max-width: 80vw;
-    height: auto;
-    margin-bottom: 12px;
-  }
+.album-placeholder {
+  width: 120px;         /* tak jak obrazek */
+  height: 120px;        /* tak jak obrazek */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ddd;  /* jasnoszare tło, możesz zmienić */
+  color: #333;             /* ciemniejszy tekst */
+  font-family: 'Arial', sans-serif; /* albo dopasuj do swojej */
+  font-size: 14px;
+  font-style: italic;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+  user-select: none;
+  flex-shrink: 0;  /* nie kurczy się */
 }
