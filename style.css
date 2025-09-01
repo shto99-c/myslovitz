@@ -170,13 +170,6 @@ html, body {
     align-self: flex-end;
   }
   
-/* --- Pomniejszony rozmiar okładki albumu --- */
-.album-cover {
-  width: 80px;
-  height: auto;
-  border-radius: 6px;
-  object-fit: cover;
-  box-shadow: 0 0 6px rgba(255, 234, 117, 0.2);
-}
+
 
 
